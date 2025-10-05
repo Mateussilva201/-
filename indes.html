@@ -1,288 +1,291 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>?</title>
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>?</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      height: 100vh;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-family: 'UnifrakturCook', cursive;
-      overflow: hidden;
-      position: relative;
-    }
+        body {
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'UnifrakturCook', cursive;
+            overflow: hidden;
+            position: relative;
+        }
 
-    #question {
-      font-size: 40vw;
-      cursor: pointer;
-      user-select: none;
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.3s ease, text-shadow 0.3s ease;
-      position: absolute;
-    }
+        #question {
+            font-size: 40vw;
+            cursor: pointer;
+            user-select: none;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.3s ease, text-shadow 0.3s ease;
+            position: absolute;
+        }
 
-    #question.visible {
-      opacity: 1;
-    }
+        #question.visible {
+            opacity: 1;
+        }
 
-    #question:hover {
-      transform: scale(1.1);
-      text-shadow: 0 0 30px white;
-    }
+        #question:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 30px white;
+        }
 
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      border: 2px solid white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 80%;
-      max-width: 800px;
-      height: 60%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s ease;
-      z-index: 10;
-    }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
 
-    .popup.open {
-      transform: translate(-50%, -50%) scale(1);
-    }
+        .popup.open {
+            transform: translate(-50%, -50%) scale(1);
+        }
 
-    .fechar {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 2rem;
-      cursor: pointer;
-      color: white;
-      user-select: none;
-      z-index: 11;
-    }
+        .fechar {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            user-select: none;
+            z-index: 11;
+        }
 
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      opacity: 0;
-      visibility: hidden;
-      transition: 0.3s;
-      z-index: 5;
-    }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 5;
+        }
 
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-      display: none;
-    }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            display: none;
+        }
 
-    .popup.open video {
-      display: block;
-    }
+        .popup.open video {
+            display: block;
+        }
 
-    
-    #miniFoto {
-      position: fixed;
-      bottom: 45px;
-      right: 15px;
-      width: 70px;
-      height: 60px;
-      border-radius: 50%;
-      cursor: pointer;
-      object-fit: cover;
-      opacity: 0.7;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 3;
-    }
 
-    #miniFoto:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
+        #miniFoto {
+            position: fixed;
+            bottom: 45px;
+            right: 15px;
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 3;
+        }
 
-  
-    #miniFoto2 {
-      position: fixed;
-      bottom: 10px;
-      left: 15px;
-      width: 10px;
-      cursor: pointer;
-      object-fit: cover;
-      opacity: 0.8;
-      z-index: 3;
-    
-    }
+        #miniFoto:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
 
-    #miniFoto2:hover {
-      opacity: 1;
-      transform: scale(1.08);
-      
-    }
 
-   
-    #creditos {
-      position: fixed;
-      bottom: 600px;
-      right: 20px;
-      font-size: 0.9rem;
-      font-family: 'UnifrakturCook', cursive;
-      color: white;
-      opacity: 0.7;
-      text-align: left;
-      line-height: 1.3;
-      z-index: 3;
-      text-shadow: 0 0 8px rgba(255,255,255,0.3);
-      transition: opacity 0.3s ease;
-    }
+        #miniFoto2 {
+            position: fixed;
+            bottom: 10px;
+            left: 15px;
+            width: 10px;
+            cursor: pointer;
+            object-fit: cover;
+            opacity: 0.8;
+            z-index: 3;
 
-    #creditos:hover {
-      opacity: 1;
-      text-shadow: 0 0 15px white;
-    }
+        }
 
-    
-    .video-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border-radius: 10px;
-    }
+        #miniFoto2:hover {
+            opacity: 1;
+            transform: scale(1.08);
 
-    #popup3 video {
-      width: auto;
-      height: 100%;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-  </style>
+        }
+
+
+        #creditos {
+            position: fixed;
+            bottom: 600px;
+            right: 20px;
+            font-size: 0.9rem;
+            font-family: 'UnifrakturCook', cursive;
+            color: white;
+            opacity: 0.7;
+            text-align: left;
+            line-height: 1.3;
+            z-index: 3;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+            transition: opacity 0.3s ease;
+        }
+
+        #creditos:hover {
+            opacity: 1;
+            text-shadow: 0 0 15px white;
+        }
+
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        #popup3 video {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+    </style>
 </head>
+
 <body>
 
-  <div id="question">?</div>
+    <div id="question">?</div>
 
 
-  <img id="miniFoto" src="/what/Mustard-PNG-Pic-Background.png" alt="mini foto">
-
- 
-  <img id="miniFoto2" src="what/image-removebg-preview (1).png" alt="mini foto 2">
-
-  
-  <div id="creditos">
-    github: mateussilva201<br>
-    instagram: @tz.trent
-  </div>
+    <img id="miniFoto" src="/what/Mustard-PNG-Pic-Background.png" alt="mini foto">
 
 
-  <div class="overlay" id="overlay"></div>
+    <img id="miniFoto2" src="what/image-removebg-preview (1).png" alt="mini foto 2">
 
 
-  <div class="popup" id="popup1">
-    <span class="fechar" id="fechar1">&times;</span>
-    <video id="video1" src="what/sixseven.mp4" loop playsinline></video>
-  </div>
-
- 
-  <div class="popup" id="popup2">
-    <span class="fechar" id="fechar2">&times;</span>
-    <video id="video2" src="what/ig_video_1759623158.mp4" loop playsinline></video>
-  </div>
-
-  
-  <div class="popup" id="popup3">
-    <span class="fechar" id="fechar3">&times;</span>
-    <div class="video-container">
-      <video id="video3" src="what/fak.mp4" loop playsinline></video>
+    <div id="creditos">
+        github: mateussilva201<br>
+        instagram: @tz.trent
     </div>
-  </div>
 
-  <script>
-    const question = document.getElementById('question');
-    const popup1 = document.getElementById('popup1');
-    const overlay = document.getElementById('overlay');
-    const fechar1 = document.getElementById('fechar1');
-    const video1 = document.getElementById('video1');
 
-    const miniFoto = document.getElementById('miniFoto');
-    const popup2 = document.getElementById('popup2');
-    const fechar2 = document.getElementById('fechar2');
-    const video2 = document.getElementById('video2');
+    <div class="overlay" id="overlay"></div>
 
-    const miniFoto2 = document.getElementById('miniFoto2');
-    const popup3 = document.getElementById('popup3');
-    const fechar3 = document.getElementById('fechar3');
-    const video3 = document.getElementById('video3');
 
-    
-    function abrirPopup(popup, video) {
-      popup.classList.add('open');
-      overlay.classList.add('active');
-      video.currentTime = 0;
-      video.muted = false;
-      video.play().catch(() => console.warn("Autoplay bloqueado."));
-    }
+    <div class="popup" id="popup1">
+        <span class="fechar" id="fechar1">&times;</span>
+        <video id="video1" src="what/sixseven.mp4" loop playsinline></video>
+    </div>
 
-   
-    function fecharPopup(video) {
-      document.querySelectorAll('.popup').forEach(p => p.classList.remove('open'));
-      overlay.classList.remove('active');
-      video.pause();
-    }
 
-    
-    question.addEventListener('click', () => abrirPopup(popup1, video1));
-    fechar1.addEventListener('click', () => fecharPopup(video1));
+    <div class="popup" id="popup2">
+        <span class="fechar" id="fechar2">&times;</span>
+        <video id="video2" src="what/ig_video_1759623158.mp4" loop playsinline></video>
+    </div>
 
-    miniFoto.addEventListener('click', () => abrirPopup(popup2, video2));
-    fechar2.addEventListener('click', () => fecharPopup(video2));
 
-    miniFoto2.addEventListener('click', () => abrirPopup(popup3, video3));
-    fechar3.addEventListener('click', () => fecharPopup(video3));
+    <div class="popup" id="popup3">
+        <span class="fechar" id="fechar3">&times;</span>
+        <div class="video-container">
+            <video id="video3" src="what/fak.mp4" loop playsinline></video>
+        </div>
+    </div>
 
-    overlay.addEventListener('click', () => {
-      fecharPopup(video1);
-      fecharPopup(video2);
-      fecharPopup(video3);
-    });
+    <script>
+        const question = document.getElementById('question');
+        const popup1 = document.getElementById('popup1');
+        const overlay = document.getElementById('overlay');
+        const fechar1 = document.getElementById('fechar1');
+        const video1 = document.getElementById('video1');
 
-    
-    document.addEventListener('mousemove', (e) => {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const dist = Math.sqrt((e.clientX - centerX)**2 + (e.clientY - centerY)**2);
-      if (dist < 250) question.classList.add('visible');
-      else question.classList.remove('visible');
-    });
-  </script>
+        const miniFoto = document.getElementById('miniFoto');
+        const popup2 = document.getElementById('popup2');
+        const fechar2 = document.getElementById('fechar2');
+        const video2 = document.getElementById('video2');
+
+        const miniFoto2 = document.getElementById('miniFoto2');
+        const popup3 = document.getElementById('popup3');
+        const fechar3 = document.getElementById('fechar3');
+        const video3 = document.getElementById('video3');
+
+
+        function abrirPopup(popup, video) {
+            popup.classList.add('open');
+            overlay.classList.add('active');
+            video.currentTime = 0;
+            video.muted = false;
+            video.play().catch(() => console.warn("Autoplay bloqueado."));
+        }
+
+
+        function fecharPopup(video) {
+            document.querySelectorAll('.popup').forEach(p => p.classList.remove('open'));
+            overlay.classList.remove('active');
+            video.pause();
+        }
+
+
+        question.addEventListener('click', () => abrirPopup(popup1, video1));
+        fechar1.addEventListener('click', () => fecharPopup(video1));
+
+        miniFoto.addEventListener('click', () => abrirPopup(popup2, video2));
+        fechar2.addEventListener('click', () => fecharPopup(video2));
+
+        miniFoto2.addEventListener('click', () => abrirPopup(popup3, video3));
+        fechar3.addEventListener('click', () => fecharPopup(video3));
+
+        overlay.addEventListener('click', () => {
+            fecharPopup(video1);
+            fecharPopup(video2);
+            fecharPopup(video3);
+        });
+
+
+        document.addEventListener('mousemove', (e) => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const dist = Math.sqrt((e.clientX - centerX) ** 2 + (e.clientY - centerY) ** 2);
+            if (dist < 250) question.classList.add('visible');
+            else question.classList.remove('visible');
+        });
+    </script>
 
 </body>
+
 </html>
